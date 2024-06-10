@@ -12,14 +12,11 @@ import Navbar from './Navbar'
 
 const Canvas=()=>{
 
-     const {t,ref,cl,rect,setdraw,tno,settno}=useContext(User);
+     const {t,ref,ref2,cl,rect,setdraw,tno,settno,setimg}=useContext(User);
       
   return (
     <>
-      <div className="w-fit h-fit  "
-      onMouseDown={cl}
-        onMouseMove={rect}
-        onMouseUp={()=>{setdraw(false)}}>
+      <div className="w-fit h-fit  " onMouseDown={cl} onMouseMove={rect} onMouseUp={()=>{setdraw(false)}} ref={ref2}>
    <Navbar/>  
       <canvas
          

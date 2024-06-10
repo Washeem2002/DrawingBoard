@@ -1,83 +1,126 @@
 'use client'
-import {createContext, useRef,useState,useEffect} from "react"
+import {createContext, useRef,useState,useEffect} from "react";
+import square from "@/reducers/square";
+import circle from "@/reducers/circle";
+import roumbus from "@/reducers/roumbus";
+import arrow from "@/reducers/arrow";
+import line from "@/reducers/line";
+import brush from "@/reducers/brush";
+import image from "@/reducers/image";
+import eracer from "@/reducers/erracer";
 export  const User=createContext(null);
 export const AppWrapper=({children})=>{
     const ref=useRef(null);
+    const ref2=useRef(null);
     // --which tool
     const [tno,settno]=useState(0);
     //--end
+    //key
+    const [word,setword]=useState(["|"]);
+
+    //key-end
     const [draw,setdraw]=useState(false);
     const [erace,seterace]=useState(false);
     const [x,setx]=useState(null);
     const [y,sety]=useState(null);
     const [img_data,setimg_data]=useState(null);
+    const [text,settext]=useState(false);
+    
+   const [img,setimg]=useState(null);
+
     const cl=(e)=>{
+      if(tno==6)
+        {
+           if(!text)
+            {   const canvas = ref.current;
+                const ctx = canvas.getContext("2d");
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX ;
+                const y = e.clientY ;
+                ctx.lineWidth=3
+                setx(x);
+                sety(y);
+                ctx.save();
+                const image=ctx.getImageData(0, 0, canvas.width, canvas.height);
+                setimg_data(image)
+
+                    setword(["|"]);
+                    settext(!text);}
+
+                    else{
+                      setword((word)=>{return word.slice(0,-1)});
+                      
+                    }
+                    
+                    return;
+        }
+
 
       const canvas = ref.current;
       const ctx = canvas.getContext("2d");
       const rect = canvas.getBoundingClientRect();
       const x = e.clientX ;
       const y = e.clientY ;
+      ctx.lineWidth=3
       setx(x);
       sety(y);
-      setdraw(true);
       ctx.save();
       const image=ctx.getImageData(0, 0, canvas.width, canvas.height);
       setimg_data(image)
-  
+
+      
+      setdraw(true);
+     
+      if(tno==5)
+        {
+          ctx.beginPath();
+          ctx.moveTo(x,y);
+        }
+        if(tno==8)
+          {
+            ctx.clearRect(x-15,y-15,30,30)
+          }
+        
+       
     }
     const rect=(e)=>{
+      e.preventdefault;
        if(draw)
         {
-          const canvas = ref.current;
-          const ctx = canvas.getContext("2d");
-          const rect = canvas.getBoundingClientRect();
-          const x1 = e.clientX - rect.left;
-          const y1 = e.clientY - rect.top;
-          ctx.restore();
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          if(img_data)
-            {
-              ctx.putImageData(img_data, 0, 0);
-            }
 
+          switch(tno){
+            case 0:
+              square(e,img_data,x,y,ref);
+              break;
+            case 1:
+              circle(e,img_data,x,y,ref);
+              break;
+            case 2:
+              roumbus(e,img_data,x,y,ref);
+              break;
+            case 3:
+              arrow(e,img_data,x,y,ref);
+              break;
+            case 4:
+              line(e,img_data,x,y,ref);
+              break;
+            case 5:
+              brush(e,img_data,x,y,ref);  
+              break;
+            case 7:
+              image(e,img_data,x,y,ref,img);
+              break;
+            case 8:
+              eracer(e,ref);
+              break;
+
+
+
+
+
+          }
+         
             
-            const radius = Math.sqrt(Math.pow(x1 - x, 2) + Math.pow(y1 - y, 2));
-
-            if(tno==0)
-              {
-               ctx.fillStyle = 'blue';
-               ctx.fillRect(x, y, x1-x, y1-y);
-              }
-              if(tno==1)
-                {
-                  ctx.beginPath();
-                 ctx.arc(x, y, radius, 0, 2 * Math.PI);
-                 ctx.fillStyle = 'red';
-                 ctx.fill();
-                }
-            if(tno==2)
-              {
-                ctx.beginPath();
-                ctx.moveTo(x+(x1-x)/2,y);
-                 ctx.lineTo(x,y+(y1-y)/2);
-                ctx.lineTo(x+(x1-x)/2,y1);
-                 ctx.lineTo(x1,y+(y1-y)/2);
-                 ctx.fillStyle = 'red';
-                 ctx.fill();               
-
-              }
-
-              if(tno==3)
-                {
-                  ctx.beginPath();
-                  ctx.moveTo(x,y);
-                   ctx.lineTo(x1,(y1));
-                   
-                  
-                 ctx.stroke();
-                }
-  
         }
     }
   
@@ -93,10 +136,90 @@ export const AppWrapper=({children})=>{
     canvas.height = window.innerHeight;
       }
       
-    }, [])
+    }, []);
+   
+
+    /// case 6
+
+    useEffect(()=>{
+         const key=(e)=>{
+          if(e.key=='Backspace')
+            {
+              setword((word)=>{
+                
+                
+              const arr=  word.slice(0,-2);
+              return [...arr,"|"];
+              
+              
+              })
+            }
+         else{
+          
+          
+          setword((prevWord) => {
+            const newWord = prevWord.slice(0, -1); // Remove the cursor
+            return [...newWord, e.key, "|"]; // Add new key and cursor
+          });
+        
+        
+        
+        }}
+         
+        window.addEventListener('keydown',key)
+        return(()=>{
+          window.removeEventListener('keydown',key)
+        })
+    },[])
+
+
+    useEffect(()=>{
+
+       if(text)
+         {
+          
+           const canvas = ref.current;
+           const ctx = canvas.getContext("2d");
+           ctx.fillStyle = 'black';
+           ctx.clearRect(0, 0, canvas.width, canvas.height);
+           ctx.putImageData(img_data, 0, 0);
+      ctx.font = "48px serif";
+
+
+      let string="";
+      let x_t=x;
+      let y_t=y;
+      for(let i=0;i<word.length;i++)
+        {
+          if(word[i]==="Enter")
+            {
+              ctx.fillText(string,x_t,y_t);
+              y_t+=48;
+              string="";
+            }
+            else
+            {
+              string+=word[i];
+            }
+        }
+       ctx.fillText(string, x_t, y_t);
+        if(word[word.length - 1]!=="|")
+        {
+           settext(false);
+         }
+       
+         }
+     
+    },[word])
+    const close=()=>{
+      setdraw(false)
+    }
+    
+//  case 6
+    
     const t=90
     return(
-      <User.Provider value={{t,ref,cl,rect,setdraw,tno,settno}}>
+      <User.Provider value={{t,ref,ref2,cl,rect,setdraw,tno,settno,setimg}}>
          {children}
       </User.Provider>
     )
