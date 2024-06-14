@@ -27,6 +27,7 @@ export const AppWrapper=({children})=>{
     const [text,settext]=useState(false);
     
    const [img,setimg]=useState(null);
+   const [points,setpoints]=useState([]);
 
     const cl=(e)=>{
       if(tno==6)
@@ -80,9 +81,14 @@ export const AppWrapper=({children})=>{
           {
             ctx.clearRect(x-15,y-15,30,30)
           }
-        
+        if(tno==5)
+          {
+            setpoints((points)=>[{x1:e.clientX ,y1:e.clientY}])
+          }
        
     }
+
+  
     const rect=(e)=>{
       e.preventdefault;
        if(draw)
@@ -105,7 +111,7 @@ export const AppWrapper=({children})=>{
               line(e,img_data,x,y,ref);
               break;
             case 5:
-              brush(e,img_data,x,y,ref);  
+              brush(e,img_data,ref,points,setpoints);  
               break;
             case 7:
               image(e,img_data,x,y,ref,img);

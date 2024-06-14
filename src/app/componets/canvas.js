@@ -16,7 +16,14 @@ const Canvas=()=>{
       
   return (
     <>
-      <div className="w-fit h-fit  " onMouseDown={cl} onMouseMove={rect} onMouseUp={()=>{setdraw(false)}} ref={ref2}>
+      <div className="w-fit h-fit  " onMouseDown={cl} onMouseMove={rect} onMouseUp={()=>{setdraw(false)}} 
+      
+      onTouchStart={cl}
+      onTouchMove={rect}
+      onTouchEnd={()=>{setdraw(false)}}
+      
+      
+      ref={ref2}>
    <Navbar/>  
       <canvas
          
