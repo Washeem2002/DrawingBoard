@@ -62,7 +62,8 @@ const Tool=()=>{
             {
               tool.map((arr,i)=>{
                 return(
-                  <div className={`p-[4px] sm:p-3 hover:bg-red-700 ${tno==i?"bg-red-700":""} rounded relative`} key={i} onClick={()=>{
+                  <div className={`p-[4px] sm:p-3 hover:bg-red-700 ${tno==i?"bg-red-700":""} rounded relative`} key={i} onClick={(e)=>{
+                    
                     settno(i);
                     if(i===7)
                     {ref3.current.click();}

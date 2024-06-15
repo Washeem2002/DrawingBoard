@@ -33,9 +33,9 @@ const Canvas=()=>{
     <>
       <div  className="overflow-hidden no-scroolbar" onMouseDown={cl} onMouseMove={rect} onMouseUp={()=>{setdraw(false)}} 
       
-      onTouchStart={(e)=>{e.preventDefault();cl(e.touches[0]);}}
-      onTouchMove={(e)=>{e.preventDefault();rect(e.touches[0])}}
-      onTouchEnd={(e)=>{e.preventDefault();setdraw(false)}}
+      onTouchStart={(e)=>{cl(e.touches[0]);}}
+      onTouchMove={(e)=>{rect(e.touches[0])}}
+      onTouchEnd={(e)=>{setdraw(false)}}
       
       
       ref={ref2}>
