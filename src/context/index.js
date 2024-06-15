@@ -32,6 +32,7 @@ export const AppWrapper=({children})=>{
    const [points,setpoints]=useState([]);
    
     const cl=(e)=>{
+      console.log(e)
       const canvas = ref.current;
       
       const ctx = canvas.getContext("2d");
@@ -94,7 +95,7 @@ export const AppWrapper=({children})=>{
   
     const rect=(e)=>{
       
-
+      console.log(e)
        if(draw)
         {
 
