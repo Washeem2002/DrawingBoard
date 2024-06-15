@@ -1,4 +1,5 @@
 const eracer=(e,ref)=>{
+  e.preventDefault();
     const canvas = ref.current;
     const ctx = canvas.getContext("2d");
     const rect = canvas.getBoundingClientRect();

@@ -4,7 +4,8 @@ const image=(e,img_data,x,y,ref,img)=>{
     const rect = canvas.getBoundingClientRect();
     const x1 = e.clientX - rect.left;
     const y1 = e.clientY - rect.top;
-    ctx.restore();
+    
+    
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     if(img_data)
       {

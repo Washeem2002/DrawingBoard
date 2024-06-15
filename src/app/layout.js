@@ -2,12 +2,16 @@
 import "./globals.css";
 
 import { AppWrapper } from "@/context";
+import { Fontwrapper } from "@/context/font";
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body >
+      <body className="overflow-hidden no-scroolbar">
+        
+        <Fontwrapper>
        <AppWrapper> {children}</AppWrapper>
+       </Fontwrapper>
        
      
         

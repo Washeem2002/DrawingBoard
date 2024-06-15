@@ -25,7 +25,7 @@ const brush = (e, img_data, ref, points, setpoints) => {
       ctx.putImageData(img_data, 0, 0);
     }
 
-    ctx.lineWidth = 5;
+    
     ctx.lineJoin = 'round';
     ctx.lineCap = 'round';
 

@@ -10,9 +10,11 @@ import { LuEraser } from "react-icons/lu";
 import { IoIosColorPalette } from "react-icons/io";
 import { User } from "@/context";
 import { useContext, useRef } from "react";
+import { Font } from "@/context/font";
 const Tool=()=>{
 
     const {t,ref,ref2,cl,rect,setdraw,tno,settno,setimg}=useContext(User);
+    const font=useContext(Font);
     const ref3=useRef(null)
     const tool=[
       <BiRectangle/>,
@@ -54,20 +56,20 @@ const Tool=()=>{
      
     return(
         <>
-        <div className="p-[7px]   bg-black text-white rounded-md">
-         <div className="w-full flex gap-2 text-[20px] ">
+        <div className="p-[7px]   bg-black text-white rounded-md w-fit h-fit">
+         <div className="w-full flex gap-1 sm:gap-2 text-[18px] sm:text-[20px] ">
             
             {
               tool.map((arr,i)=>{
                 return(
-                  <div className={`p-3 hover:bg-red-700 ${tno==i?"bg-red-700":""} rounded relative`} key={i} onClick={()=>{
+                  <div className={`p-[4px] sm:p-3 hover:bg-red-700 ${tno==i?"bg-red-700":""} rounded relative`} key={i} onClick={()=>{
                     settno(i);
                     if(i===7)
                     {ref3.current.click();}
 
                   }}>
                {arr}
-               <div className="w-fit h-fit text-[12px] absolute right-1 bottom-1">{i}</div>
+               <div className="w-fit h-fit text-[12px] absolute right-1 bottom-1 hidden sm:block">{i}</div>
             </div>
                 )
               })
@@ -81,9 +83,9 @@ const Tool=()=>{
         onChange={handleimage}
       />
             <div className="bg-slate-200 h-100 w-[1px]"></div>
-            <div className="p-3 hover:bg-red-700 rounded relative" >
+            <div className={`p-[4px] sm:p-3 hover:bg-red-700 ${font.style?"bg-red-700":""} rounded relative`} onClick={()=>{font.setstyle((style)=>!style)}}>
               <IoIosColorPalette/>
-              <div className="w-fit h-fit text-[12px] absolute right-1 bottom-1">9</div>
+              <div className="w-fit h-fit text-[12px] absolute right-1 bottom-1  hidden sm:block" >9</div>
             </div>
            
          </div>

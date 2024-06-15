@@ -1,5 +1,5 @@
 'use client'
-import {createContext, useRef,useState,useEffect} from "react";
+import {createContext, useRef,useState,useEffect, useContext} from "react";
 import square from "@/reducers/square";
 import circle from "@/reducers/circle";
 import roumbus from "@/reducers/roumbus";
@@ -8,6 +8,7 @@ import line from "@/reducers/line";
 import brush from "@/reducers/brush";
 import image from "@/reducers/image";
 import eracer from "@/reducers/erracer";
+import { Font } from "./font";
 export  const User=createContext(null);
 export const AppWrapper=({children})=>{
     const ref=useRef(null);
@@ -19,6 +20,7 @@ export const AppWrapper=({children})=>{
     const [word,setword]=useState(["|"]);
 
     //key-end
+    const font=useContext(Font)
     const [draw,setdraw]=useState(false);
     const [erace,seterace]=useState(false);
     const [x,setx]=useState(null);
@@ -28,20 +30,26 @@ export const AppWrapper=({children})=>{
     
    const [img,setimg]=useState(null);
    const [points,setpoints]=useState([]);
-
+   
     const cl=(e)=>{
+      const canvas = ref.current;
+      
+      const ctx = canvas.getContext("2d");
+      ctx.lineWidth=font.strokewidth;
+      ctx.fillStyle=(font.background);
+      ctx.strokeStyle=font.stroke;
+      ctx.font=`${font.fontsize}px Arial`;
+      ctx.globalAlpha=1-font.opacity/100;
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX ;
+      const y = e.clientY ;
       if(tno==6)
         {
            if(!text)
-            {   const canvas = ref.current;
-                const ctx = canvas.getContext("2d");
-                const rect = canvas.getBoundingClientRect();
-                const x = e.clientX ;
-                const y = e.clientY ;
-                ctx.lineWidth=3
+            {   
                 setx(x);
                 sety(y);
-                ctx.save();
+                
                 const image=ctx.getImageData(0, 0, canvas.width, canvas.height);
                 setimg_data(image)
 
@@ -57,15 +65,10 @@ export const AppWrapper=({children})=>{
         }
 
 
-      const canvas = ref.current;
-      const ctx = canvas.getContext("2d");
-      const rect = canvas.getBoundingClientRect();
-      const x = e.clientX ;
-      const y = e.clientY ;
-      ctx.lineWidth=3
+     
       setx(x);
       sety(y);
-      ctx.save();
+     
       const image=ctx.getImageData(0, 0, canvas.width, canvas.height);
       setimg_data(image)
 
@@ -90,7 +93,8 @@ export const AppWrapper=({children})=>{
 
   
     const rect=(e)=>{
-      e.preventdefault;
+      
+
        if(draw)
         {
 
@@ -135,20 +139,14 @@ export const AppWrapper=({children})=>{
       seterace(!erace);
      
     }
-    useEffect(() => {
-      const canvas = ref.current;
-      if (canvas) {
-        canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-      }
-      
-    }, []);
+   
    
 
     /// case 6
 
     useEffect(()=>{
          const key=(e)=>{
+          
           if(e.key=='Backspace')
             {
               setword((word)=>{
@@ -186,10 +184,9 @@ export const AppWrapper=({children})=>{
           
            const canvas = ref.current;
            const ctx = canvas.getContext("2d");
-           ctx.fillStyle = 'black';
            ctx.clearRect(0, 0, canvas.width, canvas.height);
            ctx.putImageData(img_data, 0, 0);
-      ctx.font = "48px serif";
+      
 
 
       let string="";
@@ -200,7 +197,7 @@ export const AppWrapper=({children})=>{
           if(word[i]==="Enter")
             {
               ctx.fillText(string,x_t,y_t);
-              y_t+=48;
+              y_t+=font.fontsize;
               string="";
             }
             else
@@ -217,6 +214,7 @@ export const AppWrapper=({children})=>{
          }
      
     },[word])
+
     const close=()=>{
       setdraw(false)
     }
