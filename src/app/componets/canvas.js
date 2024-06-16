@@ -9,9 +9,11 @@ import { useRef, useState ,useEffect} from "react"
 import Navbar from './Navbar'
 
 const Canvas=()=>{
-
+     const input=useRef(null);
+    
      const {t,ref,ref2,cl,rect,setdraw,tno,settno,setimg}=useContext(User);
      const font=useContext(Font);
+     const [int,setint]=useState(false);
      useEffect(() => {
       const canvas = ref.current;
       const setCanvasSize = () => {
@@ -33,7 +35,17 @@ const Canvas=()=>{
     <>
       <div  className="overflow-hidden no-scroolbar" onMouseDown={cl} onMouseMove={rect} onMouseUp={()=>{setdraw(false)}} 
       
-      onTouchStart={(e)=>{cl(e.touches[0]);}}
+      onTouchStart={(e)=>{
+        if(!int && tno===6)
+          {
+            input.current.click();
+          }
+          else if(!int && tno===6)
+          {
+            input.current.blur();
+          }
+        
+        cl(e.touches[0]);}}
       onTouchMove={(e)=>{rect(e.touches[0])}}
       onTouchEnd={(e)=>{setdraw(false)}}
       
@@ -47,10 +59,12 @@ const Canvas=()=>{
         ref={ref}
         
       >
+       
      
 
 
       </canvas>
+      <input type='text' className='hidden' ref={input}></input>
       </div>
     
      
