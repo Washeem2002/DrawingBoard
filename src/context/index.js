@@ -214,7 +214,11 @@ export const AppWrapper=({children})=>{
           
           setword((prevWord) => {
             const newWord = prevWord.slice(0, -1); // Remove the cursor
-            return [...newWord, e.key, "|"]; // Add new key and cursor
+            let key=e.key;
+            if (!key) {
+              key = String.fromCharCode(k);
+            }
+            return [...newWord, key, "|"]; // Add new key and cursor
           });
         
         
