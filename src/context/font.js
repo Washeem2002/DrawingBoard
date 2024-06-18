@@ -3,8 +3,8 @@ import { Children, createContext, useRef, useState } from "react";
 
 export const Font=createContext(null);
 export const Fontwrapper=({children})=>{
-    const [stroke,setstroke]=useState("#F1F1F1");
-    const [background,setbackground]=useState("#F1F1F1");
+    const [stroke,setstroke]=useState("#1e1e1e");
+    const [background,setbackground]=useState("#1e1e1e");
     const [strokewidth,setstrokewidth]=useState(5);
     const [fontsize,setfontsize]=useState(10);
     const [opacity,setopacity]=useState(0);
