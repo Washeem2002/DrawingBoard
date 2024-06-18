@@ -9,11 +9,12 @@ import { useRef, useState ,useEffect} from "react"
 import Navbar from './Navbar'
 
 const Canvas=()=>{
-     const input=useRef(null);
     
-     const {t,ref,ref2,cl,rect,setdraw,tno,settno,setimg}=useContext(User);
+    
+     const {t,ref,ref2,cl,rect,setdraw,tno,settno,setimg,draw,tol,stl,input}=useContext(User);
      const font=useContext(Font);
      const [int,setint]=useState(false);
+     let istouch=useRef(false);
      useEffect(() => {
       const canvas = ref.current;
       const setCanvasSize = () => {
@@ -33,21 +34,67 @@ const Canvas=()=>{
       
   return (
     <>
-      <div  className="overflow-hidden no-scroolbar" onMouseDown={cl} onMouseMove={rect} onMouseUp={()=>{setdraw(false)}} 
+      <div  className="overflow-hidden no-scroolbar" onMouseDown={
+        (e)=>{
+          e.preventDefault();
+          if(istouch.current)
+            {
+              return;
+            }
+            
+            
+            
+          cl(e)
+        }
+        
+      
+      
+      } 
+      
+      onMouseMove={
+        
+        
+        (e)=>{
+          if(istouch.current)
+            {
+              return;
+            }
+            rect(e);
+        }
+        
+      
+      
+      
+      } onMouseUp={()=>{
+        
+        if(istouch.current)
+          {
+            return;
+          }
+        setdraw(false)
+      
+      
+      
+      }} 
       
       onTouchStart={(e)=>{
-        if(!int && tno===6)
-          {
-            input.current.click();
-          }
-          else if(!int && tno===6)
-          {
-            input.current.blur();
-          }
+       
+        istouch.current=true;
+        cl(e);
         
-        cl(e.touches[0]);}}
-      onTouchMove={(e)=>{rect(e.touches[0])}}
-      onTouchEnd={(e)=>{setdraw(false)}}
+      
+      
+      }}
+      onTouchMove={(e)=>{
+        istouch.current=true;
+        rect(e.touches[0]);
+      }}
+      onTouchEnd={(e)=>{
+        
+        istouch.current=true;
+        setdraw(false)
+      
+      }}
       
       
       ref={ref2}>
@@ -64,7 +111,7 @@ const Canvas=()=>{
 
 
       </canvas>
-      <input type='text' className='hidden' ref={input}></input>
+      <input type="text" className="absolute left-[50px] top-[30px] border-2 border-red-800 hidden" ref={input}></input>
       </div>
     
      

@@ -16,12 +16,13 @@ const Navbar=()=>{
                <FiAlignJustify/>
                
             </div>
-        <Tool></Tool>
+            <div className="w-fit h-fit" ref={contxt.tol}><Tool ></Tool></div>
+        
         <div className="w-[30px] h-[30px] bg-transparent hidden sm:block"></div>
        
         </div>
         
-     {(font.style)? <div className="w-fit max-h-screen  rounded-md shadow-md shadow-stone-900 bg-white p-3 overflow-y-scroll no-scrollbar flex flex-col gap-3">
+     {(font.style)? <div className="w-fit max-h-screen  rounded-md shadow-md shadow-stone-900 bg-white p-3 overflow-y-scroll no-scrollbar flex flex-col gap-3" onClick={()=>{contxt.setdraw(false)}} ref={contxt.stl}>
             
              {/* Stroke */}
            <div className="w-full flex flex-col gap-[10px] ">

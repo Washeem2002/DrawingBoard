@@ -20,6 +20,15 @@ export const AppWrapper=({children})=>{
     const [word,setword]=useState(["|"]);
 
     //key-end
+    //input ref
+    const input =useRef(null);
+    // input ref
+    // toolbar ref
+    const tol=useRef(null);
+    // toolbar
+    //style ref
+    const stl=useRef(null);
+    //style ref
     const font=useContext(Font)
     const [draw,setdraw]=useState(false);
     const [erace,seterace]=useState(false);
@@ -32,6 +41,28 @@ export const AppWrapper=({children})=>{
    const [points,setpoints]=useState([]);
    
     const cl=(e)=>{
+      if(tol )
+        {if(tol.current.contains(e.target) )
+          {
+            input.current.blur();
+            console.log(stl)
+            if(tno==6)
+              {setword((word)=>{return word.slice(0,-1)});}
+            
+            return;
+          }}
+          if(stl.current)
+            {
+              if(stl.current.contains(e.target) )
+                {
+                  input.current.blur();
+                  console.log(stl)
+                  if(tno==6)
+                    {setword((word)=>{return word.slice(0,-1)});}
+                  
+                  return;
+                }
+            }
       
       const canvas = ref.current;
       
@@ -42,22 +73,34 @@ export const AppWrapper=({children})=>{
       ctx.font=`${font.fontsize}px Arial`;
       ctx.globalAlpha=1-font.opacity/100;
       const rect = canvas.getBoundingClientRect();
-      const x = e.clientX ;
-      const y = e.clientY ;
+      const x = e.touches?e.touches[0].clientX:e.clientX ;
+      const y = e.touches?e.touches[0].clientY:e.clientY ;
       if(tno==6)
         {
+           console.log("yes");
+           if(e.touches)
+            {
+              console.log("touche");
+            }
+            else
+            {
+              console.log("mouse down")
+            }
            if(!text)
             {   
+                
                 setx(x);
                 sety(y);
                 
                 const image=ctx.getImageData(0, 0, canvas.width, canvas.height);
-                setimg_data(image)
+                setimg_data(image);
+                    input.current.focus();
 
                     setword(["|"]);
                     settext(!text);}
 
                     else{
+                      input.current.blur();
                       setword((word)=>{return word.slice(0,-1)});
                       
                     }
@@ -94,7 +137,10 @@ export const AppWrapper=({children})=>{
 
   
     const rect=(e)=>{
-      
+      if(tno===6)
+        {
+          return;
+        }
      
        if(draw)
         {
@@ -224,8 +270,10 @@ export const AppWrapper=({children})=>{
     
     const t=90
     return(
-      <User.Provider value={{t,ref,ref2,cl,rect,setdraw,tno,settno,setimg}}>
-         {children}
+      <User.Provider value={{t,ref,ref2,cl,rect,setdraw,tno,settno,setimg,draw,tol,stl,input}}>
+        {children}
+         
+         
       </User.Provider>
     )
 }
