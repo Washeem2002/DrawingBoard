@@ -111,7 +111,7 @@ const Canvas=()=>{
 
 
       </canvas>
-      <input type="text" className="absolute left-[50px] top-[30px] border-2 border-red-800 hidden" ref={input}></input>
+      <input type="text" className="absolute left-[50px] top-[30px] border-2 border-red-800 " ref={input}></input>
       </div>
     
      

@@ -94,7 +94,11 @@ export const AppWrapper=({children})=>{
                 
                 const image=ctx.getImageData(0, 0, canvas.width, canvas.height);
                 setimg_data(image);
+                if(input.current)
+                  {
                     input.current.focus();
+                  }
+                    
 
                     setword(["|"]);
                     settext(!text);}
