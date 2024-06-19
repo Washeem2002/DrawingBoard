@@ -45,7 +45,7 @@ export const AppWrapper=({children})=>{
         {if(tol.current.contains(e.target) )
           {
             input.current.blur();
-            console.log(stl)
+            
             if(tno==6)
               {setword((word)=>{return word.slice(0,-1)});}
             
@@ -77,15 +77,7 @@ export const AppWrapper=({children})=>{
       const y = e.touches?e.touches[0].clientY:e.clientY ;
       if(tno==6)
         {
-           console.log("yes");
-           if(e.touches)
-            {
-              console.log("touche");
-            }
-            else
-            {
-              console.log("mouse down")
-            }
+           
            if(!text)
             {   
                 
@@ -96,6 +88,7 @@ export const AppWrapper=({children})=>{
                 setimg_data(image);
                 if(input.current)
                   {
+                    input.current.value="";
                     input.current.focus();
                   }
                     
@@ -193,44 +186,20 @@ export const AppWrapper=({children})=>{
    
    
 
-    /// case 6
-
-    useEffect(()=>{
-         const key=(e)=>{
-          
-          if(e.key=='Backspace')
-            {
-              setword((word)=>{
-                
-                
-              const arr=  word.slice(0,-2);
-              return [...arr,"|"];
-              
-              
-              })
-            }
-         else{
-          
-          
-          setword((prevWord) => {
-            const newWord = prevWord.slice(0, -1); // Remove the cursor
-            let key=e.key;
-            if (!key) {
-              key = String.fromCharCode(k);
-            }
-            return [...newWord, key, "|"]; // Add new key and cursor
-          });
+ // case 6
+    useEffect(() => {
+      const handleInput = (e) => {
         
         
-        
-        }}
-         
-        window.addEventListener('keydown',key)
-        return(()=>{
-          window.removeEventListener('keydown',key)
-        })
-    },[])
-
+        setword([...(e.target.value).split(""),"|"])
+      };
+  
+      const inputElement = input.current;
+      inputElement.addEventListener('input', handleInput);
+      return () => {
+        inputElement.removeEventListener('input', handleInput);
+      };
+    }, []);
 
     useEffect(()=>{
 
@@ -249,7 +218,7 @@ export const AppWrapper=({children})=>{
       let y_t=y;
       for(let i=0;i<word.length;i++)
         {
-          if(word[i]==="Enter")
+          if(word[i]==='\n')
             {
               ctx.fillText(string,x_t,y_t);
               y_t+=font.fontsize;
