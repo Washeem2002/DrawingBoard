@@ -41,6 +41,9 @@ export const AppWrapper=({children})=>{
    const [points,setpoints]=useState([]);
    
     const cl=(e)=>{
+      const canvas = ref.current;
+      
+      
       if(tol )
         {if(tol.current.contains(e.target) )
           {
@@ -63,18 +66,23 @@ export const AppWrapper=({children})=>{
                   return;
                 }
             }
+            const ctx = canvas.getContext("2d");
+            ctx.lineWidth=font.strokewidth;
+            ctx.fillStyle=(font.background);
+            ctx.strokeStyle=font.stroke;
+            ctx.font=`${font.fontsize}px Arial`;
+            ctx.globalAlpha=1-font.opacity/100;
+            const rect = canvas.getBoundingClientRect();
+            const x = e.touches?e.touches[0].clientX:e.clientX ;
+            const y = e.touches?e.touches[0].clientY:e.clientY ;
+            
+           
+            const image=ctx.getImageData(0, 0, canvas.width, canvas.height);
+            setimg_data(image)
       
-      const canvas = ref.current;
-      
-      const ctx = canvas.getContext("2d");
-      ctx.lineWidth=font.strokewidth;
-      ctx.fillStyle=(font.background);
-      ctx.strokeStyle=font.stroke;
-      ctx.font=`${font.fontsize}px Arial`;
-      ctx.globalAlpha=1-font.opacity/100;
-      const rect = canvas.getBoundingClientRect();
-      const x = e.touches?e.touches[0].clientX:e.clientX ;
-      const y = e.touches?e.touches[0].clientY:e.clientY ;
+            
+            setdraw(true);
+     
       if(tno==6)
         {
            
@@ -107,14 +115,8 @@ export const AppWrapper=({children})=>{
 
 
      
-      setx(x);
-      sety(y);
-     
-      const image=ctx.getImageData(0, 0, canvas.width, canvas.height);
-      setimg_data(image)
-
-      
-      setdraw(true);
+        setx(x);
+        sety(y);
      
       if(tno==5)
         {
