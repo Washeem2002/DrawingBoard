@@ -21,7 +21,9 @@ const Canvas=()=>{
     <>
       <div  className="overflow-hidden" onMouseDown={
         (e)=>{
-          e.preventDefault();
+          if(e.target.tagName !== 'INPUT')
+            {e.preventDefault();}
+          
           if(istouch.current)
             {
               return;
