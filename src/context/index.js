@@ -68,11 +68,29 @@ export const AppWrapper=({children})=>{
                    ctx.font=`${font.fontsize}px Arial`;
                    ctx.globalAlpha=1-font.opacity/100;
                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                   let x2=x;
+                   let y2=y;
                    if(img_data)
                      {
                        ctx.putImageData(img_data, 0, 0);
                      }
-                     ctx.fillText(input.current.value, x, y);
+                     const t=(input.current.value).split("");
+                     console.log(t)
+                     let tex="";
+                     for(let i=0;i<t.length;i++)
+                      {
+                        if(t[i]==="\n")
+                          {
+                            ctx.fillText(tex, x2, y2);
+                            y2+=font.fontsize;
+                            tex=""
+                          }
+                          else{
+                              tex+=t[i];
+                          }
+                      }
+                      ctx.fillText(tex, x2, y2);
+                     
                       const image=ctx.getImageData(0, 0, canvas.width, canvas.height);
                       setimg_data(image);
                       settext(!text);
@@ -152,11 +170,28 @@ export const AppWrapper=({children})=>{
                    ctx.font=`${font.fontsize}px Arial`;
                    ctx.globalAlpha=1-font.opacity/100;
                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                   let x2=x;
+                   let y2=y;
                    if(img_data)
                      {
                        ctx.putImageData(img_data, 0, 0);
                      }
-                     ctx.fillText(input.current.value, x, y);
+                     const t=(input.current.value).split("");
+                     console.log(t)
+                     let tex="";
+                     for(let i=0;i<t.length;i++)
+                      {
+                        if(t[i]==="\n")
+                          {
+                            ctx.fillText(tex, x2, y2);
+                            y2+=font.fontsize;
+                            tex=""
+                          }
+                          else{
+                              tex+=t[i];
+                          }
+                      }
+                      ctx.fillText(tex, x2, y2);
                       const image=ctx.getImageData(0, 0, canvas.width, canvas.height);
                       setimg_data(image);
                       settext(!text);
@@ -259,7 +294,29 @@ export const AppWrapper=({children})=>{
         {
           ctx.putImageData(img_data, 0, 0);
         }
-        ctx.fillText(e.target.value+"|", x, y);
+        let x2=x;
+        let y2=y;
+        if(img_data)
+          {
+            ctx.putImageData(img_data, 0, 0);
+          }
+          const t=(input.current.value).split("");
+          console.log(t)
+          let tex="";
+          for(let i=0;i<t.length;i++)
+           {
+             if(t[i]==="\n")
+               {
+                 ctx.fillText(tex, x2, y2);
+                 y2+=font.fontsize;
+                 tex=""
+               }
+               else{
+                   tex+=t[i];
+               }
+           }
+           ctx.fillText(tex+"|", x2, y2);
+        
     }
     
 
@@ -314,6 +371,8 @@ useEffect(()=>{
          ctx.putImageData(img_data, 0, 0);
          console.log("hello")
        }
+      
+       
       console.log(img_data)
 },[screen])
 useEffect(()=>{
