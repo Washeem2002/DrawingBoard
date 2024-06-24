@@ -1,4 +1,5 @@
 const square=(e,img_data,x,y,ref)=>{
+  console.log("square")
     const canvas = ref.current;
     const ctx = canvas.getContext("2d");
     const rect = canvas.getBoundingClientRect();

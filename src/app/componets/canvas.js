@@ -11,30 +11,15 @@ import Navbar from './Navbar'
 const Canvas=()=>{
     
     
-     const {t,ref,ref2,cl,rect,setdraw,tno,settno,setimg,draw,tol,stl,input}=useContext(User);
+     const {t,ref,ref2,cl,rect,setdraw,tno,settno,setimg,draw,tol,stl,input,close,textch}=useContext(User);
      const font=useContext(Font);
      const [int,setint]=useState(false);
      let istouch=useRef(false);
-     useEffect(() => {
-      const canvas = ref.current;
-      const setCanvasSize = () => {
-        if (canvas) {
-          canvas.width = window.innerWidth;
-          canvas.height = window.innerHeight;
-        }
-      };
-      
-      setCanvasSize(); // Set initial size
-      window.addEventListener('resize', setCanvasSize); // Adjust size on window resize
-    
-      return () => {
-        window.removeEventListener('resize', setCanvasSize); // Cleanup listener on unmount
-      };
-    }, [ref]);
+     
       
   return (
     <>
-      <div  className="overflow-hidden no-scroolbar" onMouseDown={
+      <div  className="overflow-hidden" onMouseDown={
         (e)=>{
           e.preventDefault();
           if(istouch.current)
@@ -71,14 +56,14 @@ const Canvas=()=>{
           {
             return;
           }
-        setdraw(false)
+        close()
       
       
       
       }} 
       
       onTouchStart={(e)=>{
-       
+       e.preventDefault();
         istouch.current=true;
         cl(e);
         
@@ -92,7 +77,7 @@ const Canvas=()=>{
       onTouchEnd={(e)=>{
         
         istouch.current=true;
-        setdraw(false)
+       close();
       
       }}
       
@@ -111,7 +96,7 @@ const Canvas=()=>{
 
 
       </canvas>
-      <textarea className="absolute left-[-5000px] top-[-3000px] border-2 border-red-800" ref={input}></textarea>
+      <textarea className="absolute left-[-5000px] top-[-3000px] border-2 border-red-800" ref={input} onChange={textch}></textarea>
       </div>
     
      

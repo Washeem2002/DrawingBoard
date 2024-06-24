@@ -1,5 +1,5 @@
 'use client'
-import {createContext, useRef,useState,useEffect, useContext} from "react";
+import {createContext, useRef,useState,useEffect, useContext, useLayoutEffect} from "react";
 import square from "@/reducers/square";
 import circle from "@/reducers/circle";
 import roumbus from "@/reducers/roumbus";
@@ -39,18 +39,49 @@ export const AppWrapper=({children})=>{
     
    const [img,setimg]=useState(null);
    const [points,setpoints]=useState([]);
-   
+   const [screen,setscreen]=useState(null);
     const cl=(e)=>{
+     
+      
       const canvas = ref.current;
       
-      
+      const ctx = canvas.getContext("2d");
+      ctx.lineWidth=font.strokewidth;
+      ctx.fillStyle=(font.background);
+      ctx.strokeStyle=font.stroke;
+      ctx.font=`${font.fontsize}px Arial`;
+      ctx.globalAlpha=1-font.opacity/100;
+      const rect = canvas.getBoundingClientRect();
+    
+    
       if(tol )
         {if(tol.current.contains(e.target) )
           {
-            input.current.blur();
+          
             
-            if(tno==6)
-              {setword((word)=>{return word.slice(0,-1)});}
+            if(tno==6 && text)
+              {
+                
+                ctx.lineWidth=font.strokewidth;
+                    ctx.fillStyle=(font.background);
+                    ctx.strokeStyle=font.stroke;
+                   ctx.font=`${font.fontsize}px Arial`;
+                   ctx.globalAlpha=1-font.opacity/100;
+                   ctx.clearRect(0, 0, canvas.width, canvas.height);
+                   if(img_data)
+                     {
+                       ctx.putImageData(img_data, 0, 0);
+                     }
+                     ctx.fillText(input.current.value, x, y);
+                      const image=ctx.getImageData(0, 0, canvas.width, canvas.height);
+                      setimg_data(image);
+                      settext(!text);
+                      input.current.blur();
+          
+          
+          
+          
+          }
             
             return;
           }}
@@ -58,71 +89,94 @@ export const AppWrapper=({children})=>{
             {
               if(stl.current.contains(e.target) )
                 {
-                  input.current.blur();
-                  console.log(stl)
-                  if(tno==6)
-                    {setword((word)=>{return word.slice(0,-1)});}
+                  
+                  if(tno===6 && text)
+                    {
+
+                      ctx.lineWidth=font.strokewidth;
+                    ctx.fillStyle=(font.background);
+                    ctx.strokeStyle=font.stroke;
+                   ctx.font=`${font.fontsize}px Arial`;
+                   ctx.globalAlpha=1-font.opacity/100;
+                   ctx.clearRect(0, 0, canvas.width, canvas.height);
+                   if(img_data)
+                     {
+                       ctx.putImageData(img_data, 0, 0);
+                     }
+                     ctx.fillText(input.current.value, x, y);
+                      const image=ctx.getImageData(0, 0, canvas.width, canvas.height);
+                      setimg_data(image);
+                      settext(!text);
+                      input.current.blur();
+                    }
                   
                   return;
                 }
             }
-            const ctx = canvas.getContext("2d");
-            ctx.lineWidth=font.strokewidth;
-            ctx.fillStyle=(font.background);
-            ctx.strokeStyle=font.stroke;
-            ctx.font=`${font.fontsize}px Arial`;
-            ctx.globalAlpha=1-font.opacity/100;
-            const rect = canvas.getBoundingClientRect();
-            const x = e.touches?e.touches[0].clientX:e.clientX ;
-            const y = e.touches?e.touches[0].clientY:e.clientY ;
-            
-           
-            const image=ctx.getImageData(0, 0, canvas.width, canvas.height);
-            setimg_data(image)
       
-            
-            setdraw(true);
+      setdraw(true);
      
       if(tno==6)
         {
            
            if(!text)
             {   
+              const x1 = e.touches?e.touches[0].clientX:e.clientX ;
+              const y1 = e.touches?e.touches[0].clientY:e.clientY ;
+                setx(x1);
+                sety(y1);
                 
-                setx(x);
-                sety(y);
                 
-                const image=ctx.getImageData(0, 0, canvas.width, canvas.height);
-                setimg_data(image);
                 if(input.current)
                   {
                     input.current.value="";
                     input.current.focus();
+                    ctx.lineWidth=font.strokewidth;
+                    ctx.fillStyle=(font.background);
+                    ctx.strokeStyle=font.stroke;
+                   ctx.font=`${font.fontsize}px Arial`;
+                   ctx.globalAlpha=1-font.opacity/100;
+                    ctx.fillText("|", x1, y1);
                   }
                     
 
-                    setword(["|"]);
+                    
                     settext(!text);}
 
                     else{
+                      
+      
+                      ctx.lineWidth=font.strokewidth;
+                    ctx.fillStyle=(font.background);
+                    ctx.strokeStyle=font.stroke;
+                   ctx.font=`${font.fontsize}px Arial`;
+                   ctx.globalAlpha=1-font.opacity/100;
+                   ctx.clearRect(0, 0, canvas.width, canvas.height);
+                   if(img_data)
+                     {
+                       ctx.putImageData(img_data, 0, 0);
+                     }
+                     ctx.fillText(input.current.value, x, y);
+                      const image=ctx.getImageData(0, 0, canvas.width, canvas.height);
+                      setimg_data(image);
+                      settext(!text);
                       input.current.blur();
-                      setword((word)=>{return word.slice(0,-1)});
+                      
+
                       
                     }
                     
                     return;
         }
 
-
+        const x1 = e.touches?e.touches[0].clientX:e.clientX ;
+      const y1 = e.touches?e.touches[0].clientY:e.clientY ;
      
-        setx(x);
-        sety(y);
+      setx(x1);
+      sety(y1);
      
-      if(tno==5)
-        {
-          ctx.beginPath();
-          ctx.moveTo(x,y);
-        }
+    
+      
         if(tno==8)
           {
             ctx.clearRect(x-15,y-15,30,30)
@@ -189,67 +243,85 @@ export const AppWrapper=({children})=>{
    
 
  // case 6
-    useEffect(() => {
-      const handleInput = (e) => {
-        
-        
-        setword([...(e.target.value).split(""),"|"])
-      };
-  
-      const inputElement = input.current;
-      inputElement.addEventListener('input', handleInput);
-      return () => {
-        inputElement.removeEventListener('input', handleInput);
-      };
-    }, []);
 
-    useEffect(()=>{
+    const textch=(e)=>{
+      console.log(e.target.value.split(""));
 
-       if(text)
-         {
-          
-           const canvas = ref.current;
-           const ctx = canvas.getContext("2d");
-           ctx.clearRect(0, 0, canvas.width, canvas.height);
-           ctx.putImageData(img_data, 0, 0);
-      
-
-
-      let string="";
-      let x_t=x;
-      let y_t=y;
-      for(let i=0;i<word.length;i++)
+      const canvas=ref.current;
+      const ctx=canvas.getContext("2d");
+      ctx.lineWidth=font.strokewidth;
+      ctx.fillStyle=(font.background);
+      ctx.strokeStyle=font.stroke;
+      ctx.font=`${font.fontsize}px Arial`;
+      ctx.globalAlpha=1-font.opacity/100;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if(img_data)
         {
-          if(word[i]==='\n')
-            {
-              ctx.fillText(string,x_t,y_t);
-              y_t+=font.fontsize;
-              string="";
-            }
-            else
-            {
-              string+=word[i];
-            }
+          ctx.putImageData(img_data, 0, 0);
         }
-       ctx.fillText(string, x_t, y_t);
-        if(word[word.length - 1]!=="|")
-        {
-           settext(false);
-         }
-       
-         }
-     
-    },[word])
+        ctx.fillText(e.target.value+"|", x, y);
+    }
+    
+
+
+
 
     const close=()=>{
-      setdraw(false)
+      if(tno===6)
+        {
+          return;
+        }
+      const canvas = ref.current;
+      
+      const ctx = canvas.getContext("2d");
+      const image=ctx.getImageData(0, 0, canvas.width, canvas.height);
+      setimg_data(image);
+      setdraw(false);
+      
     }
     
 //  case 6
     
+
+useEffect(() => {
+  
+  const setCanvasSize = () => {
+    
+    
+      setscreen({a:window.innerWidth,b:window.innerHeight})
+  };
+  
+  
+  window.addEventListener('resize', setCanvasSize); // Adjust size on window resize
+
+  return () => {
+    window.removeEventListener('resize', setCanvasSize); // Cleanup listener on unmount
+  };
+}, [ref]);
+useEffect(()=>{
+    console.log(window.innerWidth);
+    const canvas = ref.current;
+   
+       canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+       const ctx = canvas.getContext("2d");
+  
+       console.log("before")
+    
+  
+     if(img_data!==null)
+       {
+         ctx.putImageData(img_data, 0, 0);
+         console.log("hello")
+       }
+      console.log(img_data)
+},[screen])
+useEffect(()=>{
+console.log(img_data)
+},[img_data])
     const t=90
     return(
-      <User.Provider value={{t,ref,ref2,cl,rect,setdraw,tno,settno,setimg,draw,tol,stl,input}}>
+      <User.Provider value={{t,ref,ref2,cl,rect,setdraw,tno,settno,setimg,draw,tol,stl,input,close,textch}}>
         {children}
          
          
