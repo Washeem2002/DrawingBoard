@@ -214,7 +214,7 @@ export const AppWrapper=({children})=>{
       
         if(tno==8)
           {
-            ctx.clearRect(x-15,y-15,30,30)
+            ctx.clearRect(x1-15,y1-15,30,30)
           }
         if(tno==5)
           {
