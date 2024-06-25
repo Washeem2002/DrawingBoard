@@ -12,8 +12,8 @@ const brush = (e, img_data, ref, points, setpoints) => {
   const rect = canvas.getBoundingClientRect();
 
   // Calculate mouse position relative to canvas
-  const mouseX = e.clientX - rect.left;
-  const mouseY = e.clientY - rect.top;
+  const mouseX = e.touches?e.touches[0].clientX:e.clientX;
+  const mouseY = e.touches?e.touches[0].clientY:e.clientY;
 
   // Update points state
   setpoints(prevPoints => {

@@ -218,7 +218,7 @@ export const AppWrapper=({children})=>{
           }
         if(tno==5)
           {
-            setpoints((points)=>[{x1:X1 ,y1:y1}])
+            setpoints((points)=>[{x:x1 ,y:y1}])
           }
        
     }

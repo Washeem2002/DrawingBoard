@@ -4,8 +4,8 @@ const roumbus=(e,img_data,x,y,ref)=>{
     const canvas = ref.current;
     const ctx = canvas.getContext("2d");
     const rect = canvas.getBoundingClientRect();
-    const x1 = e.clientX - rect.left;
-    const y1 = e.clientY - rect.top;
+    const x1 = e.touches?e.touches[0].clientX:e.clientX;
+    const y1 = e.touches?e.touches[0].clientY:e.clientY;
   
       
     

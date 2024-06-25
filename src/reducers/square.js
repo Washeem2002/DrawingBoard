@@ -5,8 +5,8 @@ const square=(e,img_data,x,y,ref)=>{
     const rect = canvas.getBoundingClientRect();
     ctx.lineJoin = 'round';
     ctx.lineCap = 'round';
-    const x1 = e.clientX - rect.left;
-    const y1 = e.clientY - rect.top;
+    const x1 = e.touches?e.touches[0].clientX:e.clientX;
+    const y1 = e.touches?e.touches[0].clientY:e.clientY;
     
     
     ctx.clearRect(0, 0, canvas.width, canvas.height);
