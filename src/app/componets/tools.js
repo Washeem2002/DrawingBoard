@@ -60,7 +60,7 @@ const Tool=()=>{
     return(
         <>
         <div className="p-[7px]   bg-black text-white rounded-md w-fit h-fit" onClick={()=>{setdraw(false)}} >
-         <div className="w-full flex gap-1 sm:gap-2 text-[18px] sm:text-[20px] ">
+         <div className="w-full flex  sm:gap-2 text-[18px] sm:text-[20px] ">
             
             {
               tool.map((arr,i)=>{
