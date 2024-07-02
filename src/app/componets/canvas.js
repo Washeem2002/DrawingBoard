@@ -65,7 +65,7 @@ const Canvas=()=>{
       }} 
       
       onTouchStart={(e)=>{
-       e.preventDefault();
+   
         istouch.current=true;
         cl(e);
         
@@ -79,7 +79,7 @@ const Canvas=()=>{
       onTouchEnd={(e)=>{
         
         istouch.current=true;
-       close(e);
+       close();
       
       }}
       

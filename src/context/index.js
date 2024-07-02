@@ -275,8 +275,8 @@ export const AppWrapper=({children})=>{
         }
     
 
-        const x1 = parseInt(e.touches?e.touches[0].clientX:e.clientX) ;
-      const y1 =parseInt(e.touches?e.touches[0].clientY:e.clientY) ;
+        const x1 = (e.touches?e.touches[0].clientX:e.clientX) ;
+      const y1 =(e.touches?e.touches[0].clientY:e.clientY) ;
      
       setx(x1);
       sety(y1);
@@ -291,7 +291,7 @@ export const AppWrapper=({children})=>{
           }
        if(tno==9)
         {
-          let idx=find(shapes,x1,y1);
+          let idx=find(shapes,e.touches?e.touches[0].clientX:e.clientX,e.touches?e.touches[0].clientY:e.clientY);
           if(idx===-1)
             {
               setdraw(false);
@@ -323,9 +323,7 @@ export const AppWrapper=({children})=>{
         }
     }
    
-  useEffect(()=>{
-   console.log(originaldata)
-  },[originaldata])
+  
     const rect=(e)=>{
       if(tno===6)
         {
@@ -432,9 +430,9 @@ export const AppWrapper=({children})=>{
               break;
             case 9:
             
-              const dx=e.touches?e.touches[0].clientX:e.clientX - x;
-              const dy=e.touches?e.touches[0].clientY:e.clientY - y;
-              
+              const dx=(e.touches?e.touches[0].clientX:e.clientX ) - x;
+              const dy=(e.touches?e.touches[0].clientY:e.clientY ) - y;
+              console.log(dx)
              
                setshapes((shapes)=>{
                 const updatedShapes = [...shapes];
