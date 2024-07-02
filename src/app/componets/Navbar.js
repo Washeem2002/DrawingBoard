@@ -22,7 +22,7 @@ const Navbar=()=>{
        
         </div>
         
-     {(font.style)? <div className="w-fit max-h-screen  rounded-md shadow-md shadow-stone-900 bg-white p-3 overflow-y-scroll no-scrollbar flex flex-col gap-3 restricted" onClick={()=>{contxt.setdraw(false)}} ref={contxt.stl}>
+     {(font.style)? <div className="w-fit max-h-[calc(100vh-100px)]  rounded-md shadow-md shadow-stone-900 bg-white p-3 overflow-y-scroll no-scrollbar flex flex-col gap-3 restricted" onClick={()=>{contxt.setdraw(false)}} ref={contxt.stl}>
             
              {/* Stroke */}
            <div className="w-full flex flex-col gap-[10px] ">
