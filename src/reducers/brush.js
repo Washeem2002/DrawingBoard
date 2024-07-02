@@ -40,7 +40,7 @@ const brush = (e, img_data, ref, points, setpoints,shapes,font) => {
       ctx.beginPath();
       ctx.moveTo(p1.x, p1.y);
 
-      for (let i = 1; i < newPoints.length; i++) {
+      for (let i = 1; i < newPoints.length-2; i++) {
         const midPoint = midPointBtw(p1, p2);
         ctx.quadraticCurveTo(p1.x, p1.y, midPoint.x, midPoint.y);
         p1 = newPoints[i];
