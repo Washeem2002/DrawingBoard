@@ -74,12 +74,12 @@ const Canvas=()=>{
       }}
       onTouchMove={(e)=>{
         istouch.current=true;
-        rect(e.touches[0]);
+        rect(e);
       }}
       onTouchEnd={(e)=>{
         
         istouch.current=true;
-       close();
+       close(e);
       
       }}
       

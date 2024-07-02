@@ -1,11 +1,11 @@
+import redraw from "./redraw";
 function midPointBtw(p1, p2) {
   return {
     x: p1.x + (p2.x - p1.x) / 2,
     y: p1.y + (p2.y - p1.y) / 2
-  };
+   };
 }
-
-const brush = (e, img_data, ref, points, setpoints) => {
+const brush = (e, img_data, ref, points, setpoints,shapes,font) => {
   // Get canvas and context
   const canvas = ref.current;
   const ctx = canvas.getContext("2d");
@@ -20,15 +20,18 @@ const brush = (e, img_data, ref, points, setpoints) => {
     const newPoints = [...prevPoints, { x: mouseX, y: mouseY }];
 
     // Clear and redraw the canvas
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    if (img_data) {
-      ctx.putImageData(img_data, 0, 0);
-    }
+     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+     
+     redraw(shapes,ref)
 
     
     ctx.lineJoin = 'round';
     ctx.lineCap = 'round';
-
+    ctx.lineWidth=font.strokewidth;
+    ctx.fillStyle=(font.background);
+    ctx.strokeStyle=font.stroke;
+    ctx.font=`${font.fontsize}px Arial`;
+    ctx.globalAlpha=1-font.opacity/100;
     // Draw the smooth line
     if (newPoints.length > 1) {
       let p1 = newPoints[0];

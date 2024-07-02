@@ -7,13 +7,14 @@ const roumbus=(e,img_data,x,y,ref)=>{
     const x1 = e.touches?e.touches[0].clientX:e.clientX;
     const y1 = e.touches?e.touches[0].clientY:e.clientY;
   
-      
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
     
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    if(img_data)
-      {
-        ctx.putImageData(img_data, 0, 0);
-      }
+    // ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // if(img_data)
+    //   {
+    //     ctx.putImageData(img_data, 0, 0);
+    //   }
 
       
      

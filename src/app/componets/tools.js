@@ -8,6 +8,7 @@ import { RiText } from "react-icons/ri";
 import { RxImage } from "react-icons/rx";
 import { LuEraser } from "react-icons/lu";
 import { IoIosColorPalette } from "react-icons/io";
+import { FaArrowPointer } from "react-icons/fa6";
 import { User } from "@/context";
 import { useContext, useRef } from "react";
 import { Font } from "@/context/font";
@@ -25,7 +26,9 @@ const Tool=()=>{
       <GoPencil/>,
       <RiText/>,
       <RxImage/>,
-      <LuEraser/>];
+      <LuEraser/>,
+      <FaArrowPointer/>
+    ];
 
   const scale=()=>{
     const canvas=ref.current;

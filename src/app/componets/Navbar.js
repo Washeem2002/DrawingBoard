@@ -12,17 +12,17 @@ const Navbar=()=>{
         <div className="w-full py-2 fixed  flex flex-col px-[2px] sm:px-5 "> 
         
         <div className="w-full flex justify-between items-center  pb-4  ">
-        <div className={`w-[34px] h-[34px] sm:w-[51px] sm:h-[51px]  h-100  text-[18px] sm:text-[20px] rounded bg-black text-white flex items-center justify-center`} >
+        <div className={`w-[34px] h-[34px] sm:w-[51px] sm:h-[51px]  h-100  text-[18px] sm:text-[20px] rounded bg-black text-white flex items-center justify-center restricted`} >
                <FiAlignJustify/>
                
             </div>
-            <div className="w-fit h-fit" ref={contxt.tol}><Tool ></Tool></div>
+            <div className="w-fit h-fit restricted" ref={contxt.tol}><Tool ></Tool></div>
         
         <div className="w-[30px] h-[30px] bg-transparent hidden sm:block"></div>
        
         </div>
         
-     {(font.style)? <div className="w-fit max-h-screen  rounded-md shadow-md shadow-stone-900 bg-white p-3 overflow-y-scroll no-scrollbar flex flex-col gap-3" onClick={()=>{contxt.setdraw(false)}} ref={contxt.stl}>
+     {(font.style)? <div className="w-fit max-h-screen  rounded-md shadow-md shadow-stone-900 bg-white p-3 overflow-y-scroll no-scrollbar flex flex-col gap-3 restricted" onClick={()=>{contxt.setdraw(false)}} ref={contxt.stl}>
             
              {/* Stroke */}
            <div className="w-full flex flex-col gap-[10px] ">

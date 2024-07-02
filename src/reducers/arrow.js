@@ -1,3 +1,4 @@
+
 const arrow=(e,img_data,x,y,ref)=>{
     const canvas = ref.current;
     const ctx = canvas.getContext("2d");
@@ -5,11 +6,11 @@ const arrow=(e,img_data,x,y,ref)=>{
     const x1 = e.touches?e.touches[0].clientX:e.clientX - rect.left;
     const y1 = e.touches?e.touches[0].clientY:e.clientY - rect.top;
     
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    if(img_data)
-      {
-        ctx.putImageData(img_data, 0, 0);
-      }
+    // ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // if(img_data)
+    //   {
+    //     ctx.putImageData(img_data, 0, 0);
+    //   }
 
       
       

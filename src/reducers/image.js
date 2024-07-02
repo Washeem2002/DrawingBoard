@@ -6,11 +6,11 @@ const image=(e,img_data,x,y,ref,img)=>{
     const y1 =e.touches?e.touches[0].clientY:e.clientY;
     
     
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    if(img_data)
-      {
-        ctx.putImageData(img_data, 0, 0);
-      }
+    // ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // if(img_data)
+    //   {
+    //     ctx.putImageData(img_data, 0, 0);
+    //   }
 
       
       const radius = Math.sqrt(Math.pow(x1 - x, 2) + Math.pow(y1 - y, 2));
