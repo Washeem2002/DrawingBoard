@@ -16,6 +16,7 @@ export  const User=createContext(null);
 export const AppWrapper=({children})=>{
     const ref=useRef(null);
     const ref2=useRef(null);
+    const downloadref=useRef(null);
     // --which tool
     const [tno,settno]=useState(0);
     //--end
@@ -49,7 +50,28 @@ export const AppWrapper=({children})=>{
    
     const cl=(e)=>{
      
-      
+      if(downloadref.current.contains(e.target) && !text)
+        {
+          
+          const canvas = ref.current;
+          const ctx = canvas.getContext("2d");
+          
+          ctx.fillStyle = "white";
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          redraw(shapes,ref)
+          if(window.navigator.msSaveBlob){
+              window.navigator.msSaveBlob(canvas.msToBlob());
+          }
+          else{
+            const a=document.createElement('a');
+            document.body.appendChild(a);
+            a.href=canvas.toDataURL("image/jpeg");
+            a.download="canvas.jpeg";
+            a.click();
+            document.body.removeChild(a);
+          }
+          return;
+        }
       const canvas = ref.current;
       
       const ctx = canvas.getContext("2d");
@@ -61,8 +83,8 @@ export const AppWrapper=({children})=>{
       ctx.strokeStyle=font.stroke;
       ctx.font=`${font.fontsize}px Arial`;
       ctx.globalAlpha=1-font.opacity/100;
-      if(tol )
-        {if(tol.current.contains(e.target) )
+      if(tol.current && stl.current && downloadref.current)
+        {if(tol.current.contains(e.target) || stl.current.contains(e.target) )
           {
           
             
@@ -118,68 +140,74 @@ export const AppWrapper=({children})=>{
           
           
           }
+
+         
+          
+              
+            
+    
             
             return;
           }}
-          if(stl.current)
-            {
-              if(stl.current.contains(e.target) )
-                {
+          // if(stl.current)
+          //   {
+          //     if(stl.current.contains(e.target) )
+          //       {
                   
-                  if(tno===6 && text)
-                    {
+          //         if(tno===6 && text)
+          //           {
                      
                       
-                      let fot={strokewidth:font.strokewidth,background:font.background,stroke:font.stroke,fontsize:font.fontsize,opacity:font.opacity}
-               ctx.clearRect(0, 0, canvas.width, canvas.height);
-               let x2=x;
-               let y2=y;
+          //             let fot={strokewidth:font.strokewidth,background:font.background,stroke:font.stroke,fontsize:font.fontsize,opacity:font.opacity}
+          //      ctx.clearRect(0, 0, canvas.width, canvas.height);
+          //      let x2=x;
+          //      let y2=y;
                
-               redraw(shapes,ref)
-                 const t=(input.current.value).split("");
-                 ctx.lineWidth=fot.strokewidth;
-                    ctx.fillStyle=(fot.background);
-                    ctx.strokeStyle=fot.stroke;
-                   ctx.font=`${fot.fontsize}px Arial`;
-                   ctx.globalAlpha=1-fot.opacity/100;
-                   let ex=x;
-                     let maxex=x;
-                 let tex="";
-                 for(let i=0;i<t.length;i++)
-                  {
-                    if(t[i]==="\n")
-                      { 
-                        maxex=Math.max(maxex,ex);
-                        ex=x;
-                        ctx.fillText(tex, x2, y2);
-                        y2+=font.fontsize;
-                        tex=""
-                      }
-                      else{
-                        ex=ex+fot.fontsize
-                          tex+=t[i];
-                      }
-                  }
-                  ctx.fillText(tex, x2, y2);
+          //      redraw(shapes,ref)
+          //        const t=(input.current.value).split("");
+          //        ctx.lineWidth=fot.strokewidth;
+          //           ctx.fillStyle=(fot.background);
+          //           ctx.strokeStyle=fot.stroke;
+          //          ctx.font=`${fot.fontsize}px Arial`;
+          //          ctx.globalAlpha=1-fot.opacity/100;
+          //          let ex=x;
+          //            let maxex=x;
+          //        let tex="";
+          //        for(let i=0;i<t.length;i++)
+          //         {
+          //           if(t[i]==="\n")
+          //             { 
+          //               maxex=Math.max(maxex,ex);
+          //               ex=x;
+          //               ctx.fillText(tex, x2, y2);
+          //               y2+=font.fontsize;
+          //               tex=""
+          //             }
+          //             else{
+          //               ex=ex+fot.fontsize
+          //                 tex+=t[i];
+          //             }
+          //         }
+          //         ctx.fillText(tex, x2, y2);
                  
                   
-                  settext(!text);
-                  input.current.blur();
-                  setshapes((shapes)=>{
-                    let sh={};
-                    sh.tno=tno;
-                    sh.font={background:fot.background,strokewidth:fot.strokewidth,stroke:fot.stroke,fontsize:fot.fontsize,opacity:fot.opacity};
-                    sh.data={sx:x,sy:y,ex:x2+fot.fontsize,ey:y2+fot.fontsize,text:t};
-                    return [...shapes,sh];
+          //         settext(!text);
+          //         input.current.blur();
+          //         setshapes((shapes)=>{
+          //           let sh={};
+          //           sh.tno=tno;
+          //           sh.font={background:fot.background,strokewidth:fot.strokewidth,stroke:fot.stroke,fontsize:fot.fontsize,opacity:fot.opacity};
+          //           sh.data={sx:x,sy:y,ex:x2+fot.fontsize,ey:y2+fot.fontsize,text:t};
+          //           return [...shapes,sh];
          
          
-                   })
+          //          })
                      
-                    }
+          //           }
                   
-                  return;
-                }
-            }
+          //         return;
+          //       }
+          //   }
 
             
       
@@ -270,11 +298,14 @@ export const AppWrapper=({children})=>{
 
                       
                     }
+
+                    
                     
                     return;
         }
-    
 
+      
+      
         const x1 = (e.touches?e.touches[0].clientX:e.clientX) ;
       const y1 =(e.touches?e.touches[0].clientY:e.clientY) ;
      
@@ -682,7 +713,7 @@ useEffect(()=>{
 
     const t=90
     return(
-      <User.Provider value={{t,ref,ref2,cl,rect,setdraw,tno,settno,setimg,draw,tol,stl,input,close,textch}}>
+      <User.Provider value={{downloadref,ref,ref2,cl,rect,setdraw,tno,settno,setimg,draw,tol,stl,input,close,textch}}>
         {children}
          
          

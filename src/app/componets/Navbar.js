@@ -3,6 +3,7 @@ import { User } from "@/context";
 import { useContext } from "react";
 import { Font } from "@/context/font";
 import { FiAlignJustify } from "react-icons/fi";
+import { IoMdDownload } from "react-icons/io";
 const Navbar=()=>{
     const contxt=useContext(User);
     const font=useContext(Font)
@@ -12,8 +13,8 @@ const Navbar=()=>{
         <div className="w-full py-2 fixed  flex flex-col px-[2px] sm:px-5 "> 
         
         <div className="w-full flex justify-between items-center  pb-4  ">
-        <div className={`w-[34px] h-[34px] sm:w-[51px] sm:h-[51px]  h-100  text-[18px] sm:text-[20px] rounded bg-black text-white flex items-center justify-center restricted`} >
-               <FiAlignJustify/>
+        <div className={`w-[34px] h-[34px] sm:w-[51px] sm:h-[51px]  h-100  text-[18px] sm:text-[20px] rounded bg-black text-white flex items-center justify-center restricted`} ref={contxt.downloadref}>
+               <IoMdDownload/>
                
             </div>
             <div className="w-fit h-fit restricted" ref={contxt.tol}><Tool ></Tool></div>

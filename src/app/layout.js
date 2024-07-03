@@ -10,7 +10,9 @@ export default function RootLayout({ children }) {
       <body className="overflow-hidden no-scroolbar transp">
         
         <Fontwrapper>
-       <AppWrapper> {children}</AppWrapper>
+       <AppWrapper>
+         {children}
+         </AppWrapper>
        </Fontwrapper>
        
      

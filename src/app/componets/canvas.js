@@ -11,7 +11,7 @@ import Navbar from './Navbar'
 const Canvas=()=>{
     
     
-     const {t,ref,ref2,cl,rect,setdraw,tno,settno,setimg,draw,tol,stl,input,close,textch}=useContext(User);
+     const {downloadref,ref,ref2,cl,rect,setdraw,tno,settno,setimg,draw,tol,stl,input,close,textch}=useContext(User);
      const font=useContext(Font);
      const [int,setint]=useState(false);
      let istouch=useRef(false);
@@ -91,6 +91,7 @@ const Canvas=()=>{
          
          
         ref={ref}
+        
         
       >
        

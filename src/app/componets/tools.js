@@ -14,7 +14,7 @@ import { useContext, useRef } from "react";
 import { Font } from "@/context/font";
 const Tool=()=>{
 
-    const {t,ref,ref2,cl,rect,setdraw,tno,settno,setimg,draw,tol,stl,input,close,textch}=useContext(User);
+    const {downloadref,ref,ref2,cl,rect,setdraw,tno,settno,setimg,draw,tol,stl,input,close,textch}=useContext(User);
     const font=useContext(Font);
     const ref3=useRef(null)
     const tool=[
